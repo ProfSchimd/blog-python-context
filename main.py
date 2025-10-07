@@ -27,17 +27,16 @@ class IgnoreZeroDiv(AbstractContextManager):
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type.__name__ == 'ZeroDivisionError':
             line = traceback.tb_lineno
-            print(f"We pretend you didn't divide by zero in line {line}")
+            print(f"Let's pretend you didn't divide by zero in line {line}")
             return True
         return False
-
 
 
 def main():
     print("PrintRed")
     print("--------")
     print("Before context")
-    with PrintRed() as c:
+    with PrintRed():
         print("Within context...")
         print("...more in context")
     print("After context")
@@ -49,11 +48,10 @@ def main():
     print()
     print("IgnoreZeroDiv")
     print("-------------")
-    with IgnoreZeroDiv() as _:
+    with IgnoreZeroDiv():
         x = 1/0
         print(f"We won't arrive here: {x}")
         
-
 
 if __name__ == "__main__":
     main()
